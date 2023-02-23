@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  instance_scheduler
+
+  Sample SAM Template for instance_scheduler
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 128
+    Tracing: Active
+    Runtime: python3.9
+  Api:
+    TracingEnabled: true
+
+Resources:
+  shutdown:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: ./src/shutdown
+      Handler: app.lambda_handler
+      Environment:
+        Variables:
+          TAG: '20:00'
+      Policies:
+        - Statement:
+          - Sid: EC2ShutDownInstances
+            Effect: Allow
+            Action:
+            - ec2:DescribeInstances
+            - ec2:StopInstances
+            Resource: '*'
