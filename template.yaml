@@ -16,10 +16,10 @@ Globals:
 
 Resources:
 ##TENER EN CUENTA UTC QUE SON 3 HS MAS QUE EN ARGENTINA
-  shutdown:
+  ShutdownEC2Instance:
     Type: AWS::Serverless::Function 
     Properties:
-      CodeUri: ./src/shutdown
+      CodeUri: ./src/shutdiwnEC2Instances
       Handler: app.lambda_handler
       Environment:
         Variables:
@@ -38,10 +38,35 @@ Resources:
           Properties:
             Schedule: cron(0 20 * * ? *)
             Enabled: true
-  start:
+  ShutdownRDS:
     Type: AWS::Serverless::Function 
     Properties:
-      CodeUri: ./src/start
+      CodeUri: ./src/shutdownRds
+      Handler: app.lambda_handler
+      Environment:
+        Variables:
+          TAG: '20:00'
+      Policies:
+        - Statement:
+          - Sid: EC2ShutDownInstances
+            Effect: Allow
+            Action:
+            - rds:StopDBCluster
+            - rds:ListTagsForResource
+            - rds:DescribeDBInstances
+            - rds:StopDBInstance
+            - rds:DescribeDBClusters
+            Resource: '*'
+      Events:
+        CronEventStop:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 20 * * ? *)
+            Enabled: true
+  StartEC2Instance:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: ./src/startEC2Instances
       Handler: app.lambda_handler
       Environment:
         Variables:
@@ -61,3 +86,28 @@ Resources:
             Schedule: cron(0 06 ? * MON-FRI *)
             Enabled: true
 
+  StartRDS:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: ./src/startRds
+      Handler: app.lambda_handler
+      Environment:
+        Variables:
+          TAG: '06:00'
+      Policies:
+        - Statement:
+          - Sid: EC2ShutDownInstances
+            Effect: Allow
+            Action:
+            - rds:StartDBCluster
+            - rds:ListTagsForResource
+            - rds:DescribeDBInstances
+            - rds:StartDBInstance
+            - rds:DescribeDBClusters
+            Resource: '*'
+      Events:
+        CronEventStop:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 20 * * ? *)
+            Enabled: true

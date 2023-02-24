@@ -8,7 +8,7 @@ architecture = "x86_64"
 handler = "app.lambda_handler"
 manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
 packagetype = "Zip"
-functions = ["shutdown"]
+functions = ["ShutdownEC2Instance"]
 
 [function_build_definitions.e0d86d56-5862-4690-aff8-c7efb78a31b5]
 codeuri = "/Users/fabianjanuszewski/noSync/GITHUB/fjanuszewski/instance_scheduler/src/start"
@@ -17,6 +17,24 @@ architecture = "x86_64"
 handler = "app.lambda_handler"
 manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
 packagetype = "Zip"
-functions = ["start"]
+functions = ["StartEC2Instance"]
+
+[function_build_definitions.43b232b1-bbbd-4fc3-a802-e5fa664c2f93]
+codeuri = "/Users/fabianjanuszewski/noSync/GITHUB/fjanuszewski/instance_scheduler/src/shutdownRds"
+runtime = "python3.9"
+architecture = "x86_64"
+handler = "app.lambda_handler"
+manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
+packagetype = "Zip"
+functions = ["ShutdownRDS"]
+
+[function_build_definitions.7f7fe159-49fa-4eac-b48f-c0bb7a7bdedb]
+codeuri = "/Users/fabianjanuszewski/noSync/GITHUB/fjanuszewski/instance_scheduler/src/startRds"
+runtime = "python3.9"
+architecture = "x86_64"
+handler = "app.lambda_handler"
+manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
+packagetype = "Zip"
+functions = ["StartRDS"]
 
 [layer_build_definitions]
