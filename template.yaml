@@ -15,6 +15,7 @@ Globals:
     TracingEnabled: true
 
 Resources:
+##TENER EN CUENTA UTC QUE SON 3 HS MAS QUE EN ARGENTINA
   shutdown:
     Type: AWS::Serverless::Function 
     Properties:
@@ -31,3 +32,32 @@ Resources:
             - ec2:DescribeInstances
             - ec2:StopInstances
             Resource: '*'
+      Events:
+        CronEventStop:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 20 * * ? *)
+            Enabled: true
+  start:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: ./src/start
+      Handler: app.lambda_handler
+      Environment:
+        Variables:
+          TAG: '06:00'
+      Policies:
+        - Statement:
+          - Sid: EC2StartInstances
+            Effect: Allow
+            Action:
+            - ec2:DescribeInstances
+            - ec2:StartInstances
+            Resource: '*'
+      Events:
+        CronEventStart:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 06 ? * MON-FRI *)
+            Enabled: true
+

@@ -10,4 +10,13 @@ manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
 packagetype = "Zip"
 functions = ["shutdown"]
 
+[function_build_definitions.e0d86d56-5862-4690-aff8-c7efb78a31b5]
+codeuri = "/Users/fabianjanuszewski/noSync/GITHUB/fjanuszewski/instance_scheduler/src/start"
+runtime = "python3.9"
+architecture = "x86_64"
+handler = "app.lambda_handler"
+manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
+packagetype = "Zip"
+functions = ["start"]
+
 [layer_build_definitions]
