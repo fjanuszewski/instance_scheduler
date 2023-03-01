@@ -11,15 +11,13 @@ Globals:
     MemorySize: 128
     Tracing: Active
     Runtime: python3.9
-  Api:
-    TracingEnabled: true
 
 Resources:
 ##TENER EN CUENTA UTC QUE SON 3 HS MAS QUE EN ARGENTINA
   ShutdownEC2Instance:
     Type: AWS::Serverless::Function 
     Properties:
-      CodeUri: ./src/shutdiwnEC2Instances
+      CodeUri: ./src/shutdownEC2Instances
       Handler: app.lambda_handler
       Environment:
         Variables:
@@ -36,7 +34,7 @@ Resources:
         CronEventStop:
           Type: Schedule
           Properties:
-            Schedule: cron(0 20 * * ? *)
+            Schedule: cron(0 23 * * ? *)
             Enabled: true
   ShutdownRDS:
     Type: AWS::Serverless::Function 

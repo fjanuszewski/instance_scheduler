@@ -14,7 +14,7 @@ def lambda_handler(event, context):
 
     filters = [{
             'Name': 'tag:AutoOff',
-            'Values': [TAG]
+            'Values': [TAG] #20:00
         },
         {
             'Name': 'instance-state-name', 
